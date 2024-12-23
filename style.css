@@ -1,20 +1,49 @@
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #6dd5ed, #2193b0);
+    color: #333;
 }
 
 .container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 50px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
 .about-us {
     text-align: center;
+    padding: 30px 20px;
 }
 
+.about-us h1 {
+    font-size: 2.5rem;
+    color: #2193b0;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.about-us h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-top: 20px;
+}
+
+.about-us p {
+    line-height: 1.6;
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Profile Cards */
 .profile {
     display: inline-block;
     margin: 15px;
+    animation: slideIn 0.8s ease-in-out;
 }
 
 .profile img {
@@ -22,11 +51,45 @@ body {
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
+    border: 4px solid #2193b0;
+    transition: transform 0.3s ease-in-out;
 }
 
+.profile img:hover {
+    transform: scale(1.1);
+}
+
+.profile h3 {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #2193b0;
+}
+
+.profile p {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Button */
 .form {
     text-align: center;
-    margin-top: 30px;
+    margin: 30px 0;
+}
+
+button {
+    padding: 10px 20px;
+    background: #2193b0;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+button:hover {
+    background: #6dd5ed;
+    transform: scale(1.1);
 }
 
 /* Modal Styles */
@@ -41,14 +104,18 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 .modal-content {
     background-color: #fff;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 10px;
     width: 90%;
     max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(0.8);
+    animation: popUp 0.4s ease-in-out forwards;
 }
 
 .close-btn {
@@ -56,27 +123,72 @@ body {
     font-size: 18px;
     cursor: pointer;
     color: #333;
+    transition: color 0.3s ease-in-out;
 }
 
 .close-btn:hover {
     color: red;
 }
 
-label, input, textarea, button {
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input, textarea, button {
     width: 100%;
     margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #2193b0;
+    box-shadow: 0 0 5px rgba(33, 147, 176, 0.5);
+}
+
+textarea {
+    resize: none;
 }
 
 button {
-    padding: 10px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
     font-size: 16px;
-    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-button:hover {
-    background-color: #0056b3;
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes popUp {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }

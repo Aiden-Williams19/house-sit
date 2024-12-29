@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - View Bookings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Bookings</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Instructions</th>
+            </tr>
+        </thead>
+        <tbody id="bookingsTable">
+            <!-- Data will load here -->
+        </tbody>
+    </table>
+
+    <script>
+        fetch('/bookings')
+            .then(response => response.json())
+            .then(bookings => {
+                const table = document.getElementById('bookingsTable');
+                bookings.forEach(booking => {
+                    const row = `
+                        <tr>
+                            <td>${booking.name}</td>
+                            <td>${booking.address}</td>
+                            <td>${booking.phone}</td>
+                            <td>${booking.start_date}</td>
+                            <td>${booking.end_date}</td>
+                            <td>${booking.instructions}</td>
+                        </tr>
+                    `;
+                    table.innerHTML += row;
+                });
+            });
+    </script>
+</body>
+
+</html>

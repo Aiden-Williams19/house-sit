@@ -12,7 +12,7 @@
         <div class="about-us">
             <h1>JG HOUSESITTING</h1>
             <h2>About Us</h2>
-            <p>We’re a team of young, dedicated guys who believe in helping you enjoy peace of mind while you take a break. Whether it’s house sitting, pet care, or simply keeping things running smoothly, we’ve got you covered.</p>
+            <p>We’re a team of young, dedicated guys who believe in helping you enjoy peace of mind while you take a break.</p>
             <div class="profile">
                 <img src="images/Aiden.jpg" alt="House Sitter">
                 <h3>Aiden Williams</h3>
@@ -35,52 +35,79 @@
         <div class="modal-content">
             <span class="close-btn" id="closeFormButton">&times;</span>
             <h2>House Sitting Booking Form</h2>
-            <form action="/book" method="POST">
+            <form id="bookingForm">
                 <label for="name">Your Full Name</label>
-                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
-            
+                <input type="text" id="name" name="name" required>
+
                 <label for="address">Where is the house?</label>
-                <input type="text" id="address" name="address" placeholder="Enter the house address" required>
-            
+                <input type="text" id="address" name="address" required>
+
                 <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
-            
+                <input type="tel" id="phone" name="phone" required>
+
                 <label for="start-date">Start Date</label>
                 <input type="date" id="start-date" name="start_date" required>
-            
+
                 <label for="end-date">End Date</label>
                 <input type="date" id="end-date" name="end_date" required>
-            
-                <label for="instructions">Any special instructions for house sitters?</label>
-                <textarea id="instructions" name="instructions" rows="4" placeholder="Enter any special instructions"></textarea>
-            
+
+                <label for="instructions">Special Instructions</label>
+                <textarea id="instructions" name="instructions"></textarea>
+
                 <button type="submit">Submit Booking</button>
             </form>
-            
         </div>
     </div>
-    
-    
+
     <script>
-        // Get modal and buttons
         const modal = document.getElementById('bookingModal');
         const openButton = document.getElementById('openFormButton');
         const closeButton = document.getElementById('closeFormButton');
+        const bookingForm = document.getElementById('bookingForm');
 
-        // Open modal
         openButton.addEventListener('click', () => {
             modal.style.display = 'flex';
         });
 
-        // Close modal
         closeButton.addEventListener('click', () => {
             modal.style.display = 'none';
         });
 
-        // Close modal when clicking outside of it
         window.addEventListener('click', (event) => {
             if (event.target === modal) {
                 modal.style.display = 'none';
+            }
+        });
+
+        bookingForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = {
+                name: document.getElementById('name').value,
+                address: document.getElementById('address').value,
+                phone: document.getElementById('phone').value,
+                start_date: document.getElementById('start-date').value,
+                end_date: document.getElementById('end-date').value,
+                instructions: document.getElementById('instructions').value,
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/book', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData),
+                });
+
+                if (response.ok) {
+                    alert('Booking submitted successfully!');
+                    modal.style.display = 'none';
+                    bookingForm.reset();
+                } else {
+                    alert('Failed to submit booking.');
+                }
+            } catch (er) {
+                console.error('Error submitting booking:', er);
+                alert(er);
             }
         });
     </script>

@@ -1,18 +1,33 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+const cors = require('cors');
 
 const app = express();
 const PORT = 3000;
 
-// Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public')); // Serve the HTML, CSS, and JS
+app.use(
+    cors({
+      origin: ['http://127.0.0.1:5500', 'http://localhost:5500'],
+    })
+  );
 
-// Endpoint to handle bookings
+
+app.use(bodyParser.json());
+app.use(express.static('public'));
+
+// Serve admin page
+app.get('/admin', (req, res) => {
+    res.sendFile(__dirname + '/public/admin.html');
+});
+
+// Handle booking submissions
 app.post('/book', (req, res) => {
     const { name, address, phone, start_date, end_date, instructions } = req.body;
+
+    if (!name || !address || !phone || !start_date || !end_date) {
+        return res.status(400).json({ success: false, message: 'All fields are required.' });
+    }
 
     const newBooking = {
         id: Date.now(),
@@ -21,35 +36,30 @@ app.post('/book', (req, res) => {
         phone,
         start_date,
         end_date,
-        instructions,
+        instructions: instructions || 'No instructions provided',
     };
 
-    // Read existing bookings
     const filePath = './bookings.json';
     let bookings = [];
     if (fs.existsSync(filePath)) {
         bookings = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
     }
-
-    // Add new booking and save
     bookings.push(newBooking);
     fs.writeFileSync(filePath, JSON.stringify(bookings, null, 2));
 
-    res.json({ success: true, message: 'Booking saved successfully!' });
+    res.status(201).json({ success: true, message: 'Booking saved successfully!' });
 });
 
-// Endpoint to view bookings
+// Fetch all bookings
 app.get('/bookings', (req, res) => {
     const filePath = './bookings.json';
+    let bookings = [];
     if (fs.existsSync(filePath)) {
-        const bookings = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-        res.json(bookings);
-    } else {
-        res.json([]);
+        bookings = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
     }
+    res.json(bookings);
 });
 
-// Start server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

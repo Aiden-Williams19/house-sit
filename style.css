@@ -201,6 +201,38 @@ tbody tr:last-child {
     border-bottom: none;
 }
 
+#reviews-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#reviews-list {
+    list-style: none;
+    padding: 0;
+}
+
+#reviews-list li {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+#reviews-list strong {
+    color: #2193b0;
+    font-size: 1.2rem;
+}
+
+#review-form-section {
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
 /* Animations */
 @keyframes fadeIn {
     from {

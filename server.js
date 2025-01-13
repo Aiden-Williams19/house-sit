@@ -63,3 +63,40 @@ app.get('/bookings', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+// Reviews storage
+const reviewsFilePath = './reviews.json';
+
+// Fetch reviews
+app.get('/reviews', (req, res) => {
+    let reviews = [];
+    if (fs.existsSync(reviewsFilePath)) {
+        reviews = JSON.parse(fs.readFileSync(reviewsFilePath, 'utf-8'));
+    }
+    res.json(reviews);
+});
+
+// Add a new review
+app.post('/reviews', (req, res) => {
+    const { name, text } = req.body;
+
+    if (!name || !text) {
+        return res.status(400).json({ message: 'Name and review text are required' });
+    }
+
+    const newReview = {
+        id: Date.now(),
+        name,
+        text,
+    };
+
+    let reviews = [];
+    if (fs.existsSync(reviewsFilePath)) {
+        reviews = JSON.parse(fs.readFileSync(reviewsFilePath, 'utf-8'));
+    }
+    reviews.push(newReview);
+    fs.writeFileSync(reviewsFilePath, JSON.stringify(reviews, null, 2));
+
+    res.status(201).json({ message: 'Review submitted successfully' });
+});
+

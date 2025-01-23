@@ -91,6 +91,21 @@ button:hover {
     background: #6dd5ed;
     transform: scale(1.1);
 }
+a {
+    padding: 10px 20px;
+    background: #2193b0;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+a:hover {
+    background: #6dd5ed;
+    transform: scale(1.1);
+}
 
 /* Modal Styles */
 .modal {
@@ -201,6 +216,11 @@ tbody tr:last-child {
     border-bottom: none;
 }
 
+.review-body h1{
+    color: #000000;
+}
+
+
 #reviews-section {
     margin-bottom: 30px;
     padding: 20px;
@@ -231,6 +251,8 @@ tbody tr:last-child {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+
 
 
 /* Animations */

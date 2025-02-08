@@ -12,7 +12,6 @@ app.use(
     })
   );
 
-
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
@@ -60,6 +59,19 @@ app.get('/bookings', (req, res) => {
     res.json(bookings);
 });
 
+// Delete a booking
+app.delete('/bookings/:id', (req, res) => {
+    const bookingId = parseInt(req.params.id);
+    const filePath = './bookings.json';
+    let bookings = [];
+    if (fs.existsSync(filePath)) {
+        bookings = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    }
+    bookings = bookings.filter(booking => booking.id !== bookingId);
+    fs.writeFileSync(filePath, JSON.stringify(bookings, null, 2));
+    res.status(200).json({ success: true, message: 'Booking deleted successfully!' });
+});
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
@@ -99,4 +111,3 @@ app.post('/reviews', (req, res) => {
 
     res.status(201).json({ message: 'Review submitted successfully' });
 });
-

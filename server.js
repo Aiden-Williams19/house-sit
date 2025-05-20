@@ -29,7 +29,7 @@ const transporter = nodemailer.createTransport({
 // Function to send email
 function sendBookingEmail(booking) {
     const mailOptions = {
-        from: '"JG Housesitting" <aidenkid10@gmail.com>',
+        from: '"AD Housesitting" <aidenkid10@gmail.com>',
         to: 'aidenkid10@gmail.com',
         subject: 'New House Sitting Booking',
         text: `
